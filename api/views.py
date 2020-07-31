@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.http import JsonResponse
 
 from rest_framework.decorators import api_view
@@ -60,3 +60,12 @@ def taskUpdate(request, pk):
         serializer.save()
 
     return Response(serializer.data)
+
+
+# delete existing task
+@api_view(['DELETE'])
+def taskDelete(request, pk):
+    task = Task.objects.get(id=pk)
+    task.delete()
+
+    return Response("Item Deleted")
