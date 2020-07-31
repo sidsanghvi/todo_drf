@@ -10,6 +10,7 @@ from .models import *
 # Create your views here.
 
 
+# dispalys all permitted api calls
 @api_view(['GET'])
 def apiOverview(request):
     api_urls = {
@@ -22,6 +23,7 @@ def apiOverview(request):
     return Response(api_urls)
 
 
+# displays all tasks
 @api_view(['GET'])
 def taskList(request):
     tasks = Task.objects.all()
@@ -29,8 +31,20 @@ def taskList(request):
     return Response(serializer.data)
 
 
+# displays specific task queried
 @api_view(['GET'])
 def taskDetail(request, pk):
     task = Task.objects.get(id=pk)
     serializer = TaskSerializer(task, many=False)
+    return Response(serializer.data)
+
+
+# add new task to task list
+@api_view(['POST'])
+def taskCreate(request):
+    serializer = TaskSerializer(data=request.data)
+
+    if serializer.is_valid():
+        serializer.save()
+
     return Response(serializer.data)
