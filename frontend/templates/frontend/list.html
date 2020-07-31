@@ -1,4 +1,6 @@
 <!DOCTYPE html>
+{% load static %}
+
 <html lang="en">
   <head
     <meta charset="UTF-8" />
@@ -15,17 +17,31 @@
       href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600&display=swap"
       rel="stylesheet"
     />
-    <style>
-      body{
-		  background: linear-gradient(90deg, 
-          rgba(54,217,182,1) 0%, 
-          rgba(32,152,126,1) 43%, 
-          rgba(0,212,255,1) 100%);
-          font-family: 'Montserrat', sans-serif;
-		}
-
-
-    </style>
+    <link rel="stylesheet" href="{% static 'css/styles.css' %}">
   </head>
-  <body>Hello</body>
+  
+  <body>
+    <div class="container">
+
+		<div id="task-container">
+			<div id="form-wrapper">
+				<form id="form">
+					<div class="flex-wrapper">
+						<div style="flex: 6">
+							<input id="title" class="form-control" type="text" name="title" placeholder="Add task">
+						</div>
+						<div style="flex: 1">
+							<input id="submit" class="btn" type="submit" >
+						</div>
+					</div>
+				</form>
+			</div>
+
+			<div id="list-wrapper">
+			
+			</div>	
+		</div>
+
+	</div>
+  </body>
 </html>
