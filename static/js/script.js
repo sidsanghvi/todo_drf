@@ -1,22 +1,3 @@
-/*
-			KEY COMPONENTS:
-			"activeItem" = null until an edit button is clicked. Will contain object of item we are editing
-			"list_snapshot" = Will contain previous state of list. Used for removing extra rows on list update
-			
-			PROCESS:
-			1 - Fetch Data and build rows "buildList()"
-			2 - Create Item on form submit
-			3 - Edit Item click - Prefill form and change submit URL
-			4 - Delete Item - Send item id to delete URL
-			5 - Cross out completed task - Event handle updated item
-
-			NOTES:
-			-- Add event handlers to "edit", "delete", "title"
-			-- Render with strike through items completed
-			-- Remove extra data on re-render
-			-- CSRF Token
-        */
-
 //wait for all html to load
 document.addEventListener("DOMContentLoaded", () => {
   // create csrf token. Codeblock taken from django docs.
@@ -54,10 +35,18 @@ document.addEventListener("DOMContentLoaded", () => {
         for (var i in data) {
           // each iteration creates new html item to render with attributes...
           // custom to the slected data point
+
+          // logic to render a strike through completed tasks
+          var tit = `<span class='title'>${data[i].title}</span>`;
+
+          if (data[i].completed == true) {
+            tit = `<strike class='title'>${data[i].title}</strike>`;
+          }
+
           var item = `
             <div id="data-row-${i}" class="task-wrapper flex-wrapper">
                 <div style="flex:7">
-                    <span class='title'>${data[i].title}</span>
+                    ${tit}
                 </div>
                 <div style="flex:1">
                     <button class="btn btn-sm btn-outline-info edit">Edit</button>
@@ -153,7 +142,7 @@ document.addEventListener("DOMContentLoaded", () => {
         "X-CSRFToken": csrftoken,
       },
       // name to be sent under: actual data
-      body: JSON.stringify({ title: title, completed: item.completed }),
+      body: JSON.stringify({ title: item.title, completed: item.completed }),
     }).then(() => {
       // re-render task list
       buildList();
