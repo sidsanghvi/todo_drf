@@ -45,6 +45,9 @@ INSTALLED_APPS = [
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
+
+    'whitenoise.middleware.WhiteNoiseMiddleware',
+
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
@@ -125,3 +128,6 @@ STATIC_URL = '/static/'
 
 # tell django where static files are located
 STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static')]
+
+# for heroku hosting
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
